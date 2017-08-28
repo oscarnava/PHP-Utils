@@ -69,7 +69,7 @@ class TemplateManager {
     $out = ob_get_contents();
     ob_end_clean();
 
-    preg_match_all('/\{([A-Za-z._]+)\}/i',$out,$vars);
+    preg_match_all('/\{([A-Za-z0-9._]+)\}/i',$out,$vars);
 //  echo "<pre>"; print_r($vars); echo "</pre>";
 
     foreach ($vars[1] as $varName) {

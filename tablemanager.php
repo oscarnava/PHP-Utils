@@ -210,7 +210,7 @@ class ObjectField extends TableMember {
       if (is_object($val)) {
         $val = $val->toHTMLTable("obj_{$key}");
       } else {
-        if (is_bool($val)) $val = $val ? 'SÃ­' : 'No';
+        if (is_bool($val)) $val = $val ? 'Sí' : 'No';
         $val = str_replace(Array("\r\n","\r","\n"),Array("<br/>","<br/>","<br/>"),$val);
       }
       if (is_array($val)) $val = '[' . implode(',',$val) . ']';
@@ -685,9 +685,9 @@ class QueryManager {
   *   asHTMLTable
   **/
 
-  function asHTMLTable($id = "", $class = "") {
+  function asHTMLTable($id = "", $class = "", $formatMap = null) {
     $rpt = new ReportManager($this);
-    return $rpt->asHTMLTable($id, $class);
+    return $rpt->asHTMLTable($id, $class, $formatMap);
 /*
     $head = "";
     return $this->foldLeft("",

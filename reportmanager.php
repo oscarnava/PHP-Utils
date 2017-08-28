@@ -49,6 +49,17 @@
  *     );
  */
 
+function arrayToString($arr) {
+  $ret = '';
+  $sep = '[';
+  foreach($arr as $item) {
+    if (is_array($item)) $item = arrayToString($item);
+    $ret .= $sep . $item;
+    $sep = ',';
+  }
+  return $ret . ']';
+}
+
 class ReportManager {
 
   private $source;
@@ -101,7 +112,7 @@ class ReportManager {
         $fmap = $formatMap[$idx];
         if (is_array($fmap)) {
           if (isset($fmap['hidden']) and $fmap['hidden']) continue;
-          $tit = $fmap['label'];
+          $tit = isset($fmap['label']) ? $fmap['label'] : ucfirst($key);
         } else {
           $tit = $fmap;
         }
@@ -153,7 +164,7 @@ class ReportManager {
       } else {
         if (is_bool($val)) $val = $val ? 'Sí' : 'No';
         $val = str_replace(Array("\r\n","\r","\n"),Array("<br/>","<br/>","<br/>"),$val);
-        if (is_array($val)) $val = '[' . implode(',',$val) . ']';
+        if (is_array($val)) $val = arrayToString($val);
         $ret .= "<td class=\"" . str_replace('.', '-', $idx) . "\">" . $fmt($val, $obj) . "</td>";
       }
     }
